@@ -31,19 +31,36 @@ const ShoeCard = ({
       ? 'new-release'
       : 'default'
 
+  const variants = {
+    default: {
+      bgColor: '',
+      text: ''
+    },
+    'new-release': {
+      bgColor: COLORS.primary,
+      text: 'Just Released!'
+    },
+    'on-sale': {
+      bgColor: COLORS.secondary,
+      text: 'Sale'
+    }
+  }
+
   return (
     <Link href={`/shoe/${slug}`}>
       <Wrapper>
         <ImageWrapper>
           <Image alt="" src={imageSrc} />
+          <SaleTag style={{'--bg-color': variants[variant].bgColor}}>{variants[variant].text}</SaleTag>
         </ImageWrapper>
         <Spacer size={12} />
         <Row>
           <Name>{name}</Name>
-          <Price>{formatPrice(price)}</Price>
+          <Price style={{'--text-decoration': salePrice && 'line-through', '--color': salePrice ? COLORS.gray[700] : COLORS.gray[900]}}>{formatPrice(price)}</Price>
         </Row>
         <Row>
           <ColorInfo>{pluralize('Color', numOfColors)}</ColorInfo>
+          {salePrice && <SalePrice>{formatPrice(salePrice)}</SalePrice>}
         </Row>
       </Wrapper>
     </Link>
@@ -55,16 +72,22 @@ const Link = styled.a`
   color: inherit;
 `;
 
-const Wrapper = styled.article``;
+const Wrapper = styled.article`
+`;
 
 const ImageWrapper = styled.div`
   position: relative;
 `;
 
-const Image = styled.img``;
+const Image = styled.img`
+  width: 100%;
+  border-radius: 16px 16px 4px 4px;
+`;
 
 const Row = styled.div`
   font-size: 1rem;
+  display: flex;
+  justify-content: space-between;
 `;
 
 const Name = styled.h3`
@@ -72,12 +95,29 @@ const Name = styled.h3`
   color: ${COLORS.gray[900]};
 `;
 
-const Price = styled.span``;
+const Price = styled.span`
+  margin-left: auto;
+  text-decoration: var(--text-decoration);
+  color: var(--color);
+`;
 
 const ColorInfo = styled.p`
   color: ${COLORS.gray[700]};
 `;
 
+const SaleTag = styled.div`
+  color: ${COLORS.white};
+  position: absolute;
+  right: -4px;
+  top: 12px;
+  background-color: var(--bg-color);
+  height: 32px;
+  line-height: 32px;
+  padding: 0 10px;
+  font-size: ${14/18}rem;
+  font-weight: ${WEIGHTS.bold};
+  border-radius: 2px;
+`
 const SalePrice = styled.span`
   font-weight: ${WEIGHTS.medium};
   color: ${COLORS.primary};

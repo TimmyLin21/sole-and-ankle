@@ -27,6 +27,7 @@ const Input = styled.input`
   font-size: 0.875rem;
   color: ${COLORS.gray[100]};
   outline-offset: 4px;
+  padding-bottom: 6px;
 
   &::placeholder {
     color: ${COLORS.gray[500]};
@@ -37,7 +38,7 @@ const SearchIcon = styled(Icon)`
   position: absolute;
   top: 0;
   left: 0;
-  bottom: 0;
+  bottom: 6px;
   margin: auto;
   width: 16px;
   height: 16px;
